@@ -1,0 +1,33 @@
+name: Windows
+on:
+  push:
+    branches: [windows]
+  pull_request:
+    branches: [windows]
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Rust
+        shell: pwsh
+        run: |
+          rustup default stable
+          rustup component add rustfmt clippy
+          cargo fmt -- --check
+          cargo clippy --locked --all-targets -- -D warnings
+          cargo test --locked --all-targets
+          cargo build --locked --release --bins
+      - name: Package
+        shell: pwsh
+        run: ./scripts/package.ps1 -BuildDirectory ./target/release
+      - name: Verify MCP with synthetic data
+        shell: pwsh
+        run: ./scripts/verify-context.ps1 -Executable './dist/AGI Brain/agi-brain-context.exe'
+      - name: Verify read-only protocol
+        run: python -m unittest discover -s server -v
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AGI-Brain-Windows-x64
+          path: dist/AGI-Brain-Windows-x64.zip

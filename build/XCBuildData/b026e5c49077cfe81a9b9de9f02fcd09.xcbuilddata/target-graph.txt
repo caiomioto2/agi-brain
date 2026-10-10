@@ -1,2 +1,0 @@
-Target dependency graph (1 target)
-Target 'Glia-MAS' in project 'Glia' (no dependencies)

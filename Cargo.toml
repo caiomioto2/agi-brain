@@ -1,0 +1,51 @@
+[package]
+name = "agi-brain-windows"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "AGI Brain: aplicativo nativo para Windows conectado ao GBrain"
+license = "MIT"
+repository = "https://github.com/caiomioto2/agi-brain"
+default-run = "agi-brain"
+
+[lib]
+name = "glia"
+path = "src/lib.rs"
+
+[[bin]]
+name = "agi-brain"
+path = "src/main.rs"
+
+[[bin]]
+name = "agi-brain-context"
+path = "src/bin/glia-context.rs"
+
+[dependencies]
+anyhow = "1"
+chrono = { version = "0.4", features = ["serde"] }
+dirs = "6"
+eframe = { version = "=0.33.3", default-features = false, features = ["wgpu", "default_fonts", "accesskit", "persistence", "x11", "wayland"] }
+wgpu = { version = "27", default-features = false, features = ["dx12", "vulkan", "wgsl"] }
+image = { version = "0.25", default-features = false, features = ["png"] }
+notify = "8"
+pulldown-cmark = "0.13"
+rfd = "0.15"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tempfile = "3"
+url = "2"
+
+[target.'cfg(windows)'.dependencies]
+tray-icon = "0.21"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[profile.dev.package."*"]
+opt-level = 2
+
+[profile.dev]
+debug = 0
+incremental = false
