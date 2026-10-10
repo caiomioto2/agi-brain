@@ -64,6 +64,17 @@ open build/Build/Products/Release/Glia.app   # or just run from Xcode
 
 No brain yet? Launch and click **Explore the Demo**.
 
+### Windows community fork
+
+[AGI Brain](https://github.com/caiomioto2/agi-brain) is a community-maintained
+Windows 10/11 x64 fork, implemented natively in Rust. It includes a constellation
+view, Brazilian Portuguese as the default language, local graph-file watching,
+and an optional read-only SSH connection to a hosted GBrain.
+See its [Windows downloads](https://github.com/caiomioto2/agi-brain/releases) and
+[setup instructions](https://github.com/caiomioto2/agi-brain#readme).
+Windows support is maintained in that fork; this repository remains the native
+macOS implementation.
+
 **Prebuilt DMG:** signed + notarized releases land on the
 [Releases](https://github.com/draphael89/glia/releases) page once code-signing
 is set up (tag a `v*` and CI builds it — see `docs/RELEASING.md`). A
