@@ -1491,11 +1491,15 @@ if ui.button("Sair do AGI Brain").clicked(){self.quit=true;ctx.send_viewport_cmd
                     Action::Show => {
                         ctx.send_viewport_cmd(egui::ViewportCommand::Visible(true));
                         ctx.send_viewport_cmd(egui::ViewportCommand::Minimized(false));
+                        ctx.send_viewport_cmd(egui::ViewportCommand::Maximized(true));
                         ctx.send_viewport_cmd(egui::ViewportCommand::Focus);
                     }
                     Action::Replay => {
                         self.start_replay();
                         ctx.send_viewport_cmd(egui::ViewportCommand::Visible(true));
+                        ctx.send_viewport_cmd(egui::ViewportCommand::Minimized(false));
+                        ctx.send_viewport_cmd(egui::ViewportCommand::Maximized(true));
+                        ctx.send_viewport_cmd(egui::ViewportCommand::Focus);
                     }
                     Action::Quit => {
                         self.quit = true;

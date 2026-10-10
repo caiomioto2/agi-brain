@@ -88,12 +88,23 @@ fn run() -> anyhow::Result<()> {
         i += 1;
     }
     launch.snapshot = std::env::var_os("GLIA_SNAPSHOT").map(Into::into);
+    let snapshot = launch.snapshot.is_some();
     let options = eframe::NativeOptions {
         viewport: eframe::egui::ViewportBuilder::default()
             .with_title("AGI Brain — seu GBrain")
             .with_inner_size([1360., 900.])
             .with_min_inner_size([800., 580.])
+            .with_maximized(!snapshot)
             .with_icon(glia::canvas::icon()),
+        // eframe restores saved geometry before this hook. Override a stale or
+        // minimized 64px window while retaining the user's other UI preferences.
+        window_builder: Some(Box::new(move |builder| {
+            builder
+                .with_inner_size([1360., 900.])
+                .with_fullscreen(false)
+                .with_maximized(!snapshot)
+        })),
+        persist_window: false,
         renderer: eframe::Renderer::Wgpu,
         persistence_path: Some(storage::state_dir().join("window.ron")),
         ..Default::default()

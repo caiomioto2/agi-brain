@@ -46,6 +46,8 @@ que usa o acesso existente ao servidor; o aplicativo não cria um servidor AWS.
   mapa válido continua visível durante falhas. Esse acesso consulta periodicamente
   o servidor; não recebe notificações instantâneas enviadas pela AWS.
 - Área de notificações do Windows e restauração da janela.
+  A abertura normal e a restauração pela área de notificações sempre maximizam
+  a janela, mesmo se uma versão anterior tiver salvo um tamanho reduzido.
 - Exportação explícita de favoritos, seleção, identidade ou páginas disponíveis.
   Conteúdo hospedado é lido sob demanda e mantido em memória; mapa e posições
   ficam no armazenamento local. Exportações só são gravadas quando solicitadas.
@@ -112,6 +114,7 @@ cd agi-brain
 & .\scripts\package.ps1
 & .\scripts\verify-native.ps1 -Executable '.\dist\AGI Brain\agi-brain.exe'
 & .\scripts\verify-context.ps1 -Executable '.\dist\AGI Brain\agi-brain-context.exe'
+& .\scripts\verify-window.ps1 -Executable '.\dist\AGI Brain\agi-brain.exe'
 ```
 
 Os testes hospedados são opcionais e usam exclusivamente seu servidor configurado:

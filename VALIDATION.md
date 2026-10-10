@@ -13,6 +13,8 @@ with Rust 1.99.0, MSVC 14.44 and Windows SDK 10.0.26100 in the development envir
   focus, replay, search, settings, help, appearance and explicit Constellation.
 - `scripts/verify-context.ps1`: initialization, five-tool catalog, synthetic identity,
   recall, combined context and explanation using the packaged executable.
+- `scripts/verify-window.ps1`: real Windows startup with a saved 64-pixel window,
+  then restoration/resizing and relaunch; both launches must be visible and maximized.
 
 Tests cover graph normalization, duplicate identities, filters, stable type colors,
 replay, point-before-line animation, neighbor insertion, deletion, stable positions,
