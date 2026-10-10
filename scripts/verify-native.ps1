@@ -7,7 +7,7 @@ New-Item -ItemType Directory -Force -Path $OutputDirectory | Out-Null
 $outputPath = (Resolve-Path -LiteralPath $OutputDirectory).Path
 $keys = @('GLIA_STATE_DIR','GLIA_SNAPSHOT','GLIA_SNAPSHOT_FOCUS','GLIA_SNAPSHOT_REPLAY','GLIA_SNAPSHOT_SEARCH','GLIA_SNAPSHOT_EXPORT','GLIA_SNAPSHOT_PANEL','GLIA_SNAPSHOT_STYLE','GLIA_SNAPSHOT_REFRESH')
 $previous = @{}
-foreach ($key in $keys) { $previous[$key] = [Environment]::GetEnvironmentVariable($key,'Process'); [Environment]::SetEnvironmentVariable($key,$null,'Process') }
+foreach ($key in $keys) { $previous[$key] = [Environment]::GetEnvironmentVariable($key,'Process'); [Environment]::SetEnvironmentVariable($key,[NullString]::Value,'Process') }
 try {
     $env:GLIA_STATE_DIR = Join-Path $outputPath 'state'
     $cases = @(
@@ -81,5 +81,8 @@ try {
         Write-Output "$($case.Name): $($report.pages) pages, $($report.drawn_nodes) drawn, $($report.drawn_edges) edges; screenshot passed"
     }
 } finally {
-    foreach ($key in $keys) { [Environment]::SetEnvironmentVariable($key,$previous[$key],'Process') }
+    foreach ($key in $keys) {
+        $value = if ($null -eq $previous[$key]) { [NullString]::Value } else { $previous[$key] }
+        [Environment]::SetEnvironmentVariable($key,$value,'Process')
+    }
 }

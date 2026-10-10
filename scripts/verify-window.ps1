@@ -19,7 +19,7 @@ public static class AGIBrainWindowProbe {
 }
 $keys = @('GLIA_STATE_DIR','GLIA_SNAPSHOT')
 $previous = @{}
-foreach ($key in $keys) { $previous[$key] = [Environment]::GetEnvironmentVariable($key,'Process'); [Environment]::SetEnvironmentVariable($key,$null,'Process') }
+foreach ($key in $keys) { $previous[$key] = [Environment]::GetEnvironmentVariable($key,'Process'); [Environment]::SetEnvironmentVariable($key,[NullString]::Value,'Process') }
 $ownedProcess = $null
 try {
     $env:GLIA_STATE_DIR = $statePath
@@ -51,5 +51,8 @@ try {
     }
 } finally {
     if ($ownedProcess -and -not $ownedProcess.HasExited) { Stop-Process -Id $ownedProcess.Id -ErrorAction SilentlyContinue }
-    foreach ($key in $keys) { [Environment]::SetEnvironmentVariable($key,$previous[$key],'Process') }
+    foreach ($key in $keys) {
+        $value = if ($null -eq $previous[$key]) { [NullString]::Value } else { $previous[$key] }
+        [Environment]::SetEnvironmentVariable($key,$value,'Process')
+    }
 }
